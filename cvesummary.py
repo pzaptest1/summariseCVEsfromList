@@ -1,4 +1,12 @@
-import nvdlib
+import openpyxl
+
+def read_cves_from_excel(excel_file):
+    cve_list = []
+    workbook = openpyxl.load_workbook(excel_file)
+    sheet = workbook.active
+    for row in sheet.iter_rows(values_only=True):
+        cve_list.extend(row)
+    return cve_list
 
 def get_cve_details(cve_id):
     try:
@@ -12,8 +20,8 @@ def get_cve_details(cve_id):
         return None, None, None, None
 
 def main():
-    # List of CVEs
-    cve_list = ['CVE-2023-48795', 'CVE-2023-46445','CVE-2023-46446']
+    # Initialize CVE list
+    cve_list = ['CVE-2023-48795', 'CVE-2023-46445', 'CVE-2023-46446']
 
     for cve_id in cve_list:
         severity, score, description, vector = get_cve_details(cve_id)
