@@ -9,7 +9,6 @@ def read_cves_from_textfile(filename):
     return cve_list
 
 
-
 def read_cves_from_excel(excel_file):
     cve_list = []
     workbook = openpyxl.load_workbook(excel_file)
@@ -21,14 +20,11 @@ def read_cves_from_excel(excel_file):
 def get_cve_details(cve_id):
     try:
         result = nvdlib.searchCVE(cveId=cve_id)[0]
-        #severity = result.v30severity
         score = result.score
         description = result.descriptions[0].value
-        #vector = result.v30vector
         return score, description
-#        return severity, score, description, vector
     except IndexError:
-        return None, None, None, None
+        return None, None 
 
 def main():
     # Initialize CVE list
@@ -42,14 +38,6 @@ def main():
             print(f"CVE ID: {cve_id}")
             print (f"Score: {score}")
             print(f"Description: {description}")
-            
-        '''if severity:
-            print(f"CVE ID: {cve_id}")
-            print(f"Severity: {severity}")
-            print(f"Score: {score}")
-            print(f"Description: {description}")
-            print(f"Vector: {vector}")
-            print()
-'''
+
 if __name__ == "__main__":
     main()
